@@ -1,4 +1,8 @@
 import './global.css';
+import '@pigment-css/react/styles.css';
+import '@arctic-kit/snow/style.css';
+
+import { inter } from '@/fonts';
 
 export const metadata = {
   title: 'Welcome to iceberg',
@@ -11,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className="theme-light">
+      <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   );
 }

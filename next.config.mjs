@@ -1,6 +1,10 @@
 //@ts-check
-
+import { withPigment, extendTheme } from '@pigment-css/nextjs-plugin';
+import { createDefaultTheme } from '@arctic-kit/snow';
 import { composePlugins, withNx } from '@nx/next';
+
+const defaultTheme = createDefaultTheme();
+const darkTheme = createDefaultTheme(true);
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -18,4 +22,19 @@ const plugins = [
   withNx,
 ];
 
-export default composePlugins(...plugins)(nextConfig);
+const composedPlugins = composePlugins(...plugins)(nextConfig);
+
+const theme = extendTheme({
+  // for color schemes
+  colorSchemes: {
+    light: defaultTheme,
+    dark: darkTheme,
+  },
+  getSelector: (colorScheme) =>
+    colorScheme ? `.theme-${colorScheme}` : ':root',
+  cssVarPrefix: 'snow',
+});
+
+export default withPigment(composedPlugins, {
+  theme,
+});
